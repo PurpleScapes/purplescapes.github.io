@@ -12,15 +12,13 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Purplescapes">
 <meta property="og:description" content="I choose a theme that inspires me and paint six large original canvases around it. When all six are finished, they are released together as a collection. Every painting is one of a kind, and each one ">
-<meta property="og:image" content="https://purplescapes.github.io/cover.jpg">
-<meta property="og:url" content="https://purplescapes.github.io/">
 <!--
   EDIT THE WORDS ON YOUR WEBSITE HERE
   1. Find the block of text below. Each line looks like:   "headline": "The words you see on your page",
   2. Change only the words inside the second pair of quote marks. Keep the quote marks and the comma at the end.
   3. To start a new line inside a sentence type \n . To use a quote mark inside your words type \" .
   4. Press Commit changes. The page updates in a minute or two.
-  Photos are the files in the images folder. Please leave the lines that start with "url" as they are.
+  Photos and logos are the files in the images folder. Please leave the lines that start with "url" as they are.
   If you later press Publish in your editor, it replaces this file, so make the same change in the editor too.
 -->
 <script type="application/json" id="ps-state">{
@@ -31,7 +29,7 @@
     "script": "collections",
     "lede": "I choose a theme that inspires me and paint six large original canvases around it. When all six are finished, they are released together as a collection. Every painting is one of a kind, and each one comes with a signed certificate of authenticity.",
     "image": {
-      "url": "images/84d380cf.jpg"
+      "url": "images/410a5aba.jpg"
     }
   },
   "copy": {
@@ -62,8 +60,8 @@
     "navBuy": "How to buy",
     "navAbout": "About",
     "navInstagram": "Instagram",
-    "btnSee": "Explore collections",
-    "btnMessage": "Let's chat",
+    "btnSee": "See the collections",
+    "btnMessage": "Message me",
     "footBottom": "Purplescapes. All paintings are original works.",
     "colLabel": "Collection",
     "enquire": "Enquire about the price",
@@ -86,10 +84,7 @@
     "labelStatus": "Status"
   },
   "about": {
-    "eyebrow": "The artist",
-    "photo": {
-      "url": "images/ed8dd08d.jpg"
-    }
+    "eyebrow": "The artist"
   },
   "fonts": {},
   "collections": [
@@ -101,15 +96,43 @@
         {
           "status": "finished",
           "image": {
-            "url": "images/8a60562c.jpg"
+            "url": "images/1ecddc62.jpg"
           }
         },
         {
           "status": "finished",
           "title": "Infinite realities",
           "image": {
-            "url": "images/ba05cce4.jpg"
+            "url": "images/b0ce7963.jpg"
           }
+        },
+        {
+          "status": "upcoming"
+        },
+        {
+          "status": "upcoming"
+        },
+        {
+          "status": "upcoming"
+        },
+        {
+          "status": "upcoming"
+        }
+      ]
+    },
+    {
+      "id": "cvafsei4",
+      "title": "",
+      "description": "",
+      "paintings": [
+        {
+          "status": "finished",
+          "image": {
+            "url": "images/cf0e7621.jpg"
+          }
+        },
+        {
+          "status": "upcoming"
         },
         {
           "status": "upcoming"
@@ -126,8 +149,16 @@
       ]
     }
   ],
-  "sizes": {},
-  "mode": "public"
+  "logo": {
+    "main": {
+      "url": "images/b82d8729.png"
+    },
+    "light": {
+      "url": "images/85434635.png"
+    }
+  },
+  "mode": "public",
+  "sizes": {}
 }</script>
 <style id="ps-reset">:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
 <style id="ps-style">
@@ -373,6 +404,12 @@ body:not(.is-editing) [data-edit]:empty { display: none; }
 .text-tools .tt-v { min-width: 3.2em; text-align: center; }
 .text-tools button { border: 0; background: rgba(255,255,255,.16); color: inherit; border-radius: 999px; padding: 7px 13px; font: inherit; cursor: pointer; }
 .text-tools button:hover { background: var(--purple); }
+
+/* studio logo (full colour image) */
+.logo.full, .foot-brand .logo.full { background-color: transparent; -webkit-mask: none; mask: none; background-repeat: no-repeat; background-position: center; background-size: contain; aspect-ratio: 1000 / 696; }
+.top .logo.full { width: 132px; }
+.foot-brand .logo.full { width: 150px; }
+@media (max-width: 560px) { .top .logo.full { width: 108px; } }
 </style>
 </head>
 <body>
@@ -518,6 +555,7 @@ body:not(.is-editing) [data-edit]:empty { display: none; }
   <div class="eb-status" id="eb-status" aria-live="polite"></div>
 </div>
 </div>
+
 <script id="ps-main">(function () {
   'use strict';
   var root = document.getElementById('ps-root');
@@ -594,6 +632,7 @@ body:not(.is-editing) [data-edit]:empty { display: none; }
     s.copy = fill(s.copy || {}, DEFAULTS.copy);
     s.about = fill(s.about || {}, DEFAULTS.about);
     s.fonts = s.fonts || {};
+    s.logo = (s.logo && typeof s.logo === 'object') ? s.logo : {};
     s.sizes = (s.sizes && typeof s.sizes === 'object') ? s.sizes : {};
     s.collections = Array.isArray(s.collections) ? s.collections : [];
     s.collections.forEach(function (c) {
@@ -648,7 +687,7 @@ body:not(.is-editing) [data-edit]:empty { display: none; }
       if (document.activeElement !== el) el.textContent = getPath(state, el.getAttribute('data-edit')) || '';
       el.contentEditable = editing ? 'true' : 'false';
     });
-    renderIntro(); renderCollections(); renderAbout(); applySizes();
+    renderIntro(); renderCollections(); renderAbout(); applyLogos(); applySizes();
     root.querySelectorAll('[data-ig]').forEach(function (a) { a.href = igURL(); });
     root.querySelectorAll('[data-dm]').forEach(function (a) { a.href = dmURL(); });
     root.querySelectorAll('[data-ig-handle]').forEach(function (s) { s.textContent = '@' + handle(); });
@@ -738,6 +777,12 @@ body:not(.is-editing) [data-edit]:empty { display: none; }
   }
   var WORDING = [['colLabel', 'Collection label'], ['enquire', 'Enquire button'], ['similar', 'Button for a sold painting'], ['dmNote', 'Note under the button ({title} shows the painting name)'], ['photoSoon', 'Text when a photo is missing'], ['firstSoon', 'Text when there are no collections'], ['meter', 'Paint drops text ({n} shows the number)'], ['closeBtn', 'Close button'], ['statusAvailable', 'Status: Available'], ['statusFinished', 'Status: Finished'], ['statusSold', 'Status: Sold'], ['statusWip', 'Status: On the easel'], ['statusUpcoming', 'Status: Coming soon'], ['labelCollection', 'Detail label: Collection'], ['labelPiece', 'Detail label: Piece'], ['labelSize', 'Detail label: Size'], ['labelMedium', 'Detail label: Medium'], ['labelYear', 'Detail label: Year'], ['labelStatus', 'Detail label: Status']];
   function wordingHTML() { return WORDING.map(function (r) { return '<label for="w-' + r[0] + '">' + esc(r[1]) + '<input id="w-' + r[0] + '" data-copy="' + r[0] + '" value="' + esc(C(r[0])) + '"></label>'; }).join(''); }
+  function logoRow(which, label) {
+    var f = state.logo[which], has = f && src(f);
+    return '<div class="img-edit"><span class="eyebrow">' + label + '</span><span class="note">' + (has ? 'Logo added.' : 'Using the original Purplescapes logo.') + '</span>' +
+      '<div class="img-tools"><label class="small-btn">' + (has ? 'Replace logo' : 'Add logo') + '<input class="vh" type="file" accept="image/png,image/webp,image/*" data-upload-logo="' + which + '"></label>' +
+      (has ? '<button type="button" class="small-btn" data-act="remove-logo" data-which="' + which + '">Remove</button>' : '') + '</div></div>';
+  }
   function settingsSheet() {
     sheetCtx = { kind: 'settings' };
     var c = cfg();
@@ -749,6 +794,8 @@ body:not(.is-editing) [data-edit]:empty { display: none; }
       '<label for="f-token">GitHub access token<input id="f-token" type="password" autocomplete="off" data-cfg="token" value="' + esc(c.token || '') + '" placeholder="Paste your fine-grained access token"></label>' +
       '<p class="note">Your website address: ' + esc(ghHost() ? 'https://' + ghHost() : 'appears here once you add your username') + '</p>' +
       '<p class="note">The token is kept only in this browser. It is never saved into your file or your website.</p>' +
+      '<span class="eyebrow" style="margin-top:12px">Logo</span>' + logoRow('main', 'Header logo (for light backgrounds)') + logoRow('light', 'Footer logo (for the dark footer)') +
+      '<p class="note">Please use a PNG with a transparent background. For the footer, use a version with light lettering so it can be read on the dark background.</p>' +
       '<span class="eyebrow" style="margin-top:12px">Words on buttons and labels</span><p class="note">These appear when someone opens a painting, and on labels across the page.</p>' + wordingHTML() +
       '<span class="eyebrow" style="margin-top:12px">Brand fonts</span>' + fontRow('display', 'Clash Display (headings)') + fontRow('script', 'Overtime (script)') +
       '<p class="note" data-note="font">Use .woff2, .woff, .otf or .ttf files. Please check that your font licences allow use on a website.</p></div>', 'Settings');
@@ -829,6 +876,7 @@ body:not(.is-editing) [data-edit]:empty { display: none; }
     var s = JSON.parse(JSON.stringify(state)); s.mode = 'public'; var files = [], seen = {};
     externalize(s.hero.image, 'images', files, seen); externalize(s.about.photo, 'images', files, seen);
     s.collections.forEach(function (c) { c.paintings.forEach(function (p) { externalize(p.image, 'images', files, seen); }); });
+    externalize(s.logo.main, 'images', files, seen); externalize(s.logo.light, 'images', files, seen);
     externalize(s.fonts.display, 'fonts', files, seen); externalize(s.fonts.script, 'fonts', files, seen);
     var desc = (state.hero.lede || 'Original canvas paintings by Purplescapes').slice(0, 200);
     var meta = '<meta name="description" content="' + esc(desc) + '">\n<meta property="og:type" content="website">\n<meta property="og:title" content="Purplescapes">\n<meta property="og:description" content="' + esc(desc) + '">\n';
@@ -1022,6 +1070,19 @@ body:not(.is-editing) [data-edit]:empty { display: none; }
     if (t.hasAttribute && t.hasAttribute('data-copy')) { state.copy[t.getAttribute('data-copy')] = t.value; changed(); }
   });
 
+  function applyLogos() {
+    var lg = state.logo || {}, m = src(lg.main), l = src(lg.light) || m;
+    root.querySelectorAll('.logo').forEach(function (el) {
+      var u = el.closest('footer') ? l : m;
+      if (u) { el.classList.add('full'); el.style.backgroundImage = 'url("' + u.replace(/"/g, '%22') + '")'; }
+      else { el.classList.remove('full'); el.style.backgroundImage = ''; }
+    });
+  }
+  function handleLogo(file, which) {
+    readAsDataURL(file).then(decode).then(function (im) {
+      state.logo[which] = { url: draw(im, 1000).toDataURL('image/png') }; changed(); render(); settingsSheet(); note('font', 'Logo added. Press Save to keep it.');
+    }).catch(function () { note('font', 'This logo could not be opened. Please use a PNG file.'); });
+  }
   function applySizes() {
     root.querySelectorAll('[data-edit]').forEach(function (el) {
       var k = +state.sizes[el.getAttribute('data-edit')];
@@ -1067,6 +1128,7 @@ body:not(.is-editing) [data-edit]:empty { display: none; }
   root.addEventListener('change', function (e) {
     var t = e.target;
     if (t.matches && t.matches('input[data-upload]')) { var f = t.files && t.files[0], k = t.getAttribute('data-upload'); t.value = ''; if (f) handleImage(f, k); return; }
+    if (t.matches && t.matches('input[data-upload-logo]')) { var lf = t.files && t.files[0], lw = t.getAttribute('data-upload-logo'); t.value = ''; if (lf) handleLogo(lf, lw); return; }
     if (t.matches && t.matches('input[data-upload-font]')) { var ff = t.files && t.files[0], w = t.getAttribute('data-upload-font'); t.value = ''; if (ff) handleFont(ff, w); return; }
     if (t.id === 'f-status' && sheetCtx) { state.collections[sheetCtx.c].paintings[sheetCtx.p].status = t.value; changed(); }
   });
@@ -1130,6 +1192,7 @@ body:not(.is-editing) [data-edit]:empty { display: none; }
     if (act === 'remove-img' && sheetCtx) { state.collections[sheetCtx.c].paintings[sheetCtx.p].image = null; changed(); editPainting(sheetCtx.c, sheetCtx.p); return; }
     if (act === 'remove-intro') { state.hero.image = null; changed(); render(); return; }
     if (act === 'remove-artist') { state.about.photo = null; changed(); render(); return; }
+    if (act === 'remove-logo') { state.logo[b.getAttribute('data-which')] = null; changed(); render(); settingsSheet(); return; }
     if (act === 'remove-font') { state.fonts[b.getAttribute('data-which')] = null; changed(); applyFonts(); settingsSheet(); return; }
     if (act === 'discard') { state = normalize(JSON.parse(savedJSON)); dirty = false; clearDraft(); render(); say('Changes discarded.'); return; }
     if (act === 'restore') { var d = readDraft(); if (d) { state = normalize(d.state); editing = true; render(); changed(); say('Edits restored. Press Save to keep them.'); } document.getElementById('eb-restore').hidden = true; return; }
